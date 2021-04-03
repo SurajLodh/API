@@ -115,6 +115,49 @@ Django version 3.1.7, using settings 'API.settings'
 Starting development server at http://127.0.0.1:8000/
 Quit the server with CTRL-BREAK.
 
+---------------------------------Creating REST(app)--------------------------------
+
+django-admin startapp REST
+
+then create REST >> add "urls.py" file 
+
+from django.contrib import admin
+from django.urls import path, include
+from django.conf.urls import url
+from rest_framework.urlpatterns import format_suffix_patterns
+from . import views
+
+urlpatterns = [
+    path('api/data/', views.PersonView.as_view(), name='api-data')
+]
+
+
+then make changes into REST >> views 
+
+import basic stuffs 
+
+
+class PersonView(APIView):
+
+    def get(self, request, format=None):
+    #1 Data
+        Temp_Data = [1,2,3]
+        data = {"Temp_Data": Temp_Data}
+        return Response(data) 
+
+
+then make changes into API >> urls 
+
+add urls path "path('', include('REST.urls')),"
+
+then setting chnages 
+
+INSTALLED_APPS = ......
+                 'REST'
+    
+done
+
+
 
 
 

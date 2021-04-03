@@ -26,7 +26,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'django_filters'
+    'django_filters',
+    'REST',
+    'app1'
 ]
 
 MIDDLEWARE = [
@@ -42,6 +44,8 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'API.urls'
 
 STATIC_URL = '/static/'
+
+TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
 
 TEMPLATES = [
     {
