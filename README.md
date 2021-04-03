@@ -157,6 +157,44 @@ INSTALLED_APPS = ......
     
 done
 
+------------------------------------------------Creating app1-----------------
+
+django-admin startapp app1
+
+then create app1 >> add "urls.py" file 
+
+from django.contrib import admin
+from django.urls import path, include
+from django.conf.urls import url
+from rest_framework.urlpatterns import format_suffix_patterns
+from . import views
+
+urlpatterns = [
+    path('', views.Index, name='Index')
+]
+
+
+then make changes into app1 >> views 
+
+import basic stuffs 
+
+
+class Index(request):
+
+      return HttpResponse("hello world")
+
+
+then make changes into API >> urls 
+
+add urls path "path('', include('app1.urls')),"
+
+then setting chnages 
+
+INSTALLED_APPS = ......
+                 'app1'
+    
+done
+
 
 
 
