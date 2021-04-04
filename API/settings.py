@@ -43,7 +43,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'API.urls'
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 
 TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
 

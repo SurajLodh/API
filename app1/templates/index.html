@@ -1,15 +1,112 @@
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+    <title>Dash</title>
+    <!-- {% load static %} -->
+
+    <style>
+        .container {
+            width: 85%;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 100%;
+            color: #065809;
+        }
+        
+        #canvas {
+            width: 100%;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>
-        Hello World
-    </h1>
-    
+    <div class="Container">
+        <h1>Hello this is Json based Graph</h1>
+        <canvas id="linechart"></canvas>
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js'></script>
+    <!-- <script src="{% static 'static/js/Dash.js' %}" type="text/javascript"></script> -->
+    <!-- <script src="/js/Dash.js" type="text/javascript"></script> -->
+
+    <script>
+        var xmlhttp = new XMLHttpRequest();
+        var url = "http://127.0.0.1:8000/api/data/?format=json";
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var data = JSON.parse(this.responseText);
+                // console.log(data);
+                var month = data.Temp_Data.map(function(elem) {
+                    return elem.date;
+                });
+                var High = data.Temp_Data.map(function(elem) {
+                    return elem.High;
+                });
+                var Low = data.Temp_Data.map(function(elem) {
+                    return elem.Low;
+                });
+
+                var ctx = document.getElementById('linechart').getContext('2d');
+                var linechart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: month,
+                        datasets: [{
+                                data: High,
+                                label: '# High',
+                                borderColor: "#3767ed",
+                                fill: false
+                            },
+                            {
+                                data: Low,
+                                label: '# Low',
+                                borderColor: "#4ed973",
+                                fill: false
+                            }
+                            //   , { 
+                            //     data: ?????????,
+                            //     label: "???",
+                            //     borderColor: "#3cba9f",
+                            //     fill: false
+                            //   }
+                            //   , { 
+                            //     data: ???????????,
+                            //     label: "????",
+                            //     borderColor: "#e8c3b9",
+                            //     fill: false
+                            //   }
+                            //   , { 
+                            //     data: ??????,
+                            //     label: "?????",
+                            //     borderColor: "#c45850",
+                            //     fill: false
+                            //     }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
+        }
+    </script>
 </body>
+
 </html>
