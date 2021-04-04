@@ -46,15 +46,14 @@
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 var data = JSON.parse(this.responseText);
-                // console.log(data);
-                var month = data.Temp_Data.map(function(elem) {
+                var month = data.Asia.map(function(elem) {
                     return elem.date;
                 });
-                var High = data.Temp_Data.map(function(elem) {
-                    return elem.High;
+                var total_vaccinations = data.Asia.map(function(elem) {
+                    return elem.total_vaccinations;
                 });
-                var Low = data.Temp_Data.map(function(elem) {
-                    return elem.Low;
+                var people_fully_vaccinated = data.Asia.map(function(elem) {
+                    return elem.people_fully_vaccinated;
                 });
 
                 var ctx = document.getElementById('linechart').getContext('2d');
@@ -63,14 +62,14 @@
                     data: {
                         labels: month,
                         datasets: [{
-                                data: High,
-                                label: '# High',
+                                data: total_vaccinations,
+                                label: '# total_vaccinations',
                                 borderColor: "#3767ed",
                                 fill: false
                             },
                             {
-                                data: Low,
-                                label: '# Low',
+                                data: people_fully_vaccinated,
+                                label: '# people_fully_vaccinated',
                                 borderColor: "#4ed973",
                                 fill: false
                             }
