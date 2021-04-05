@@ -46,15 +46,32 @@
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 var data = JSON.parse(this.responseText);
+
+                // declare the variable which data you want to access
                 var month = data.Asia.map(function(elem) {
                     return elem.date;
                 });
                 var total_vaccinations = data.Asia.map(function(elem) {
                     return elem.total_vaccinations;
                 });
-                var people_fully_vaccinated = data.Asia.map(function(elem) {
-                    return elem.people_fully_vaccinated;
+                var Europ = data.Europe.map(function(elem) {
+                    return elem.total_vaccinations;
                 });
+                var Afric = data.Africa.map(function(elem) {
+                    return elem.total_vaccinations;
+                });
+                var Oceani = data.Oceania.map(function(elem) {
+                    return elem.total_vaccinations;
+                })
+                // ;
+                // var South = data.South America.map(function(elem) {
+                //     return elem.total_vaccinations;
+                // })
+                // ;
+                // var North = data.North America.map(function(elem) {
+                //     return elem.total_vaccinations;
+                // })
+                // ;
 
                 var ctx = document.getElementById('linechart').getContext('2d');
                 var linechart = new Chart(ctx, {
@@ -63,31 +80,37 @@
                         labels: month,
                         datasets: [{
                                 data: total_vaccinations,
-                                label: '# total_vaccinations',
+                                label: "Asia",
                                 borderColor: "#3767ed",
                                 fill: false
                             },
                             {
-                                data: people_fully_vaccinated,
-                                label: '# people_fully_vaccinated',
+                                data: Europ,
+                                label: "Europe",
                                 borderColor: "#4ed973",
                                 fill: false
                             }
-                            //   , { 
-                            //     data: ?????????,
-                            //     label: "???",
-                            //     borderColor: "#3cba9f",
-                            //     fill: false
-                            //   }
-                            //   , { 
-                            //     data: ???????????,
-                            //     label: "????",
-                            //     borderColor: "#e8c3b9",
-                            //     fill: false
-                            //   }
+                              , { 
+                                data: Afric,
+                                label: "Africa",
+                                borderColor: "#3cba9f",
+                                fill: false
+                            }
+                              , { 
+                                data: Oceani,
+                                label: "Oceania",
+                                borderColor: "#e8c3b9",
+                                fill: false
+                            }
                             //   , { 
                             //     data: ??????,
-                            //     label: "?????",
+                            //     label: "South America",
+                            //     borderColor: "#c45850",
+                            //     fill: false
+                            // }
+                            //   , { 
+                            //     data: ??????,
+                            //     label: "North America",
                             //     borderColor: "#c45850",
                             //     fill: false
                             //     }

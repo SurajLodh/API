@@ -17,19 +17,22 @@ class PersonView(APIView):
 
     def get(self, request, format=None):
     
-        os.chdir(r"C:\Users\suraj\Downloads")
+        os.chdir(r"C:\Users\suraj\Downloads\practice")
         os.getcwd()
         os.listdir()
         df = pd.read_csv('owid-covid-data.csv', encoding='utf-8', na_values=None, error_bad_lines=False)
         df = df.sort_values(by='total_vaccinations', ascending=False).fillna(0)
 
-        df2 = df[['date', 'total_vaccinations','people_fully_vaccinated']][df['continent'] == 'Asia']
-        df2 = df2[:30]
-        df2 = df2.sort_values(by='total_vaccinations', ascending=True)
-                
-        result=df2.to_json(orient='table')
-        parsed_result=json.loads(result)
-        #data1 = json.dumps(parsed_result['data'])    #for user view during debugg
-        data2 = parsed_result['data']      
-        data = {'Asia':data2}
-        return Response(data) 
+        temp = ['North America', 'Asia', 'Europe', 'South America', 'Africa','Oceania']
+        
+        conti = {}
+        for i in temp :
+            df2 = df[df['continent'] == i][['date', 'total_vaccinations','people_fully_vaccinated']]
+            df2 = df2[:30]
+            df2 = df2.sort_values(by='total_vaccinations', ascending=True)
+            result=df2.to_json(orient='table')
+            parsed_result=json.loads(result)
+            data2 = parsed_result['data']
+            conti[i]=data2
+
+        return Response(conti) 
