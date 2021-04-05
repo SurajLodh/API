@@ -63,15 +63,15 @@
                 var Oceani = data.Oceania.map(function(elem) {
                     return elem.total_vaccinations;
                 })
-                // ;
-                // var South = data.South America.map(function(elem) {
-                //     return elem.total_vaccinations;
-                // })
-                // ;
-                // var North = data.North America.map(function(elem) {
-                //     return elem.total_vaccinations;
-                // })
-                // ;
+                ;
+                var north = data.North_America.map(function(elem) {
+                    return elem.total_vaccinations;
+                })
+                ;
+                var south = data.South_America.map(function(elem) {
+                    return elem.total_vaccinations;
+                })
+                ;
 
                 var ctx = document.getElementById('linechart').getContext('2d');
                 var linechart = new Chart(ctx, {
@@ -102,18 +102,18 @@
                                 borderColor: "#e8c3b9",
                                 fill: false
                             }
-                            //   , { 
-                            //     data: ??????,
-                            //     label: "South America",
-                            //     borderColor: "#c45850",
-                            //     fill: false
-                            // }
-                            //   , { 
-                            //     data: ??????,
-                            //     label: "North America",
-                            //     borderColor: "#c45850",
-                            //     fill: false
-                            //     }
+                              , { 
+                                data: south,
+                                label: "South America",
+                                borderColor: "#8f09e3",
+                                fill: false
+                            }
+                              , { 
+                                data: north,
+                                label: "North America",
+                                borderColor: "#e8352e",
+                                fill: false
+                                }
                         ]
                     },
                     options: {

@@ -22,8 +22,11 @@ class PersonView(APIView):
         os.listdir()
         df = pd.read_csv('owid-covid-data.csv', encoding='utf-8', na_values=None, error_bad_lines=False)
         df = df.sort_values(by='total_vaccinations', ascending=False).fillna(0)
+        df = df.sort_values(by='total_vaccinations', ascending=False).fillna(0)
+        df.continent = df.continent.str.replace(' ','_')
+        df.location = df.location.str.replace(' ','_')
 
-        temp = ['North America', 'Asia', 'Europe', 'South America', 'Africa','Oceania']
+        temp = ['North_America', 'Asia', 'Europe', 'South_America', 'Africa','Oceania']
         
         conti = {}
         for i in temp :
