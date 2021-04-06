@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js'></script>
+    <link rel="stylesheet" type="text/css" href="//github.com/downloads/lafeber/world-flags-sprite/flags32.css" />
+
+
+    <style>
+        /* Add some padding on document's body to prevent the content
+        to go underneath the header and footer */
+        body{
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+        .fixed-header, .fixed-footer{
+            width: 100%;
+            position: fixed;
+            background: #333;
+            padding: 10px 0;
+            color: #fff;
+        }
+        .fixed-header{
+            top: 0;
+        }
+        .fixed-footer{
+            bottom: 0;
+        }
+        .container{
+            width: 80%;
+            margin: 0 auto; /* Center the DIV horizontally */
+        }
+        nav a{
+            color: #fff;
+            text-decoration: none;
+            padding: 7px 25px;
+            display: inline-block;
+        }
+    </style>
+    <title>Dashboard</title>
+
+</head>
+
+<body>
+
+<div class="fixed-header">
+            <div class>
+                <nav>
+                    <a href="/"><span style="font-size: 40px;">COVID-19 Vaccination</span></a>
+
+                </nav>
+            </div>
+        </div>
+        <div>
+<div class="col-lg-3" style="float: left;  max-height: 650px;max-width:400px;overflow: scroll; overflow-x:hidden;">
+                <div style="background-color: rgb(41, 41, 40);">
+
+                    <span style="color: rgb(255, 255, 255); text-align: center;"><h2>Total Vaccinated: {{sum1|safe}}</h2></span>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-lg-4" style="float: left;">
+
+                        <form method="POST" enctype="multipart/form-data" action="selectCountry">
+
+                            {% for con in lable1 %}
+                            {% csrf_token %}
+                            <input type="submit" value={{con}} name="countryName" style="width:100px;"><br>
+
+                            {% endfor %}
+
+                    </div>
+                    <div style="float: left;">
+                        <canvas id="myChart" style="height: 4200px; width: 280px;"></canvas>
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-6" style="float: left;">
+                <br>
+                <br>
+
+                <div style="float: center;">
+
+                {% if ShowMap == 'True' %}
+
+                <h2 style="text-align: center;">Analysis on Continent</h2><br>
+                
+                <canvas id="conti_chart" style="height: 450px;"></canvas>
+                
+                {% elif ShowMap == 'False' %}
+
+                <h2 style="text-align: center;">Analysis</h2><br>
+                <canvas id="newChart" style="height: 450px;"></canvas>
+
+                {%endif%}
+                </div>
+
+            </div>
+            <div class="col-lg-3" style="float: left;max-width: 300px;  max-height: 650px;overflow: scroll; overflow-x:hidden;">
+
+            </div>
+            </div>
+
+        </div>
+        <br>
+</body>
+
+<script type='text/javascript'>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var chartOptions = {
+                            legend: {
+                                display: false
+                                    },
+                            scales: {
+                                xAxes: [{
+                                    barPercentage:1
+                                    }],
+                                yAxes: [
+                                        // {barPercentage: 1},
+                                        // {gridLines:{drawBorder: false}},
+                                        {ticks: {display:false}},
+                                        // {ticks: {mirror: true}},
+                                        {display: false},
+
+                                        ],
+                            elements: {
+                                rectangle: {
+                                borderSkipped: 'left',
+                                }
+                            }
+                            }
+                        };
+    var myChart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'horizontalBar',
+
+        // The data for our dataset
+        data: {
+            labels: {{lable1|safe}},
+            datasets: [{
+                label: 'Total vaccinated',
+                backgroundColor: 'rgb(265, 59, 232)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: {{Data1|safe}}
+            }]
+        },
+
+        // Configuration options go here
+        options: chartOptions
+    });
+</script>
+
+<script>
+        var xmlhttp = new XMLHttpRequest();
+        var url = "http://127.0.0.1:8000/api/data/?format=json";
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var data = JSON.parse(this.responseText);
+
+                // declare the variable which data you want to access
+                var month = data.Asia.map(function(elem) {
+                    return elem.date;
+                });
+                var total_vaccinations = data.Asia.map(function(elem) {
+                    return elem.total_vaccinations;
+                });
+                var Europ = data.Europe.map(function(elem) {
+                    return elem.total_vaccinations;
+                });
+                var Afric = data.Africa.map(function(elem) {
+                    return elem.total_vaccinations;
+                });
+                var Oceani = data.Oceania.map(function(elem) {
+                    return elem.total_vaccinations;
+                })
+                ;
+                var north = data.North_America.map(function(elem) {
+                    return elem.total_vaccinations;
+                })
+                ;
+                var south = data.South_America.map(function(elem) {
+                    return elem.total_vaccinations;
+                })
+                ;
+
+                var ctx = document.getElementById('conti_chart').getContext('2d');
+                var conti_chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: month,
+                        datasets: [{
+                                data: total_vaccinations,
+                                label: "Asia",
+                                borderColor: "#3767ed",
+                                fill: false
+                            },
+                            {
+                                data: Europ,
+                                label: "Europe",
+                                borderColor: "#4ed973",
+                                fill: false
+                            }
+                              , { 
+                                data: Afric,
+                                label: "Africa",
+                                borderColor: "#3cba9f",
+                                fill: false
+                            }
+                              , { 
+                                data: Oceani,
+                                label: "Oceania",
+                                borderColor: "#e8c3b9",
+                                fill: false
+                            }
+                              , { 
+                                data: south,
+                                label: "South America",
+                                borderColor: "#8f09e3",
+                                fill: false
+                            }
+                              , { 
+                                data: north,
+                                label: "North America",
+                                borderColor: "#e8352e",
+                                fill: false
+                                }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+
+<script type='text/javascript'>
+    var ctx = document.getElementById('newChart').getContext('2d');
+    var newChart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+
+    // The data for our dataset
+    data: {
+        labels: {{lable3|safe}},
+        datasets: [{
+            label: 'Total vaccinated',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data:{{Data3|safe}}
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+});
+
+</script>
+
+</html>
