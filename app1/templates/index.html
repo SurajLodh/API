@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js'></script>
+    <link rel="stylesheet" type="text/css" href="//github.com/downloads/lafeber/world-flags-sprite/flags32.css" />
+
+    <title>Testing</title>
+</head>
+<body>
+<canvas id="Testing" style="height: 450px;"></canvas>
+<h3>Asia</h3>
+<canvas id="Asia" style="height: 450px;"></canvas>
+<h3>Europe</h3>
+<canvas id="Europe" style="height: 450px;"></canvas>
+<h3>Africa</h3>
+<canvas id="Africa" style="height: 450px;"></canvas>
+<h3>Oceania</h3>
+<canvas id="Oceania" style="height: 450px;"></canvas>
+<h3>South_America</h3>
+<canvas id="South_America" style="height: 450px;"></canvas>
+<h3>North_America</h3>
+<canvas id="North_America" style="height: 450px;"></canvas>
+
+</body>
+
+
+<script>
+    var xmlhttp = new XMLHttpRequest();
+    var url = "http://127.0.0.1:8000/api/data/?format=json";
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var data = JSON.parse(this.responseText);
+
+            // declare the variable which data you want to access
+            var month = data.Asia.map(function(elem) {
+                return elem.date;
+            });
+            var total_vaccinations = data.Asia.map(function(elem) {
+                return elem.total_vaccinations;
+            });
+            var Europ = data.Europe.map(function(elem) {
+                return elem.total_vaccinations;
+            });
+            var Afric = data.Africa.map(function(elem) {
+                return elem.total_vaccinations;
+            });
+            var Oceani = data.Oceania.map(function(elem) {
+                return elem.total_vaccinations;
+            })
+            ;
+            var north = data.North_America.map(function(elem) {
+                return elem.total_vaccinations;
+            })
+            ;
+            var south = data.South_America.map(function(elem) {
+                return elem.total_vaccinations;
+            })
+            ;
+
+            var ctx = document.getElementById('Testing').getContext('2d');
+            var Testing = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: month,
+                    datasets: [{
+                            data: total_vaccinations,
+                            label: "Asia",
+                            borderColor: "#3767ed",
+                            fill: false
+                        },
+                        {
+                            data: Europ,
+                            label: "Europe",
+                            borderColor: "#4ed973",
+                            fill: false
+                        }
+                          , { 
+                            data: Afric,
+                            label: "Africa",
+                            borderColor: "#3cba9f",
+                            fill: false
+                        }
+                          , { 
+                            data: Oceani,
+                            label: "Oceania",
+                            borderColor: "#e8c3b9",
+                            fill: false
+                        }
+                          , { 
+                            data: south,
+                            label: "South America",
+                            borderColor: "#8f09e3",
+                            fill: false
+                        }
+                          , { 
+                            data: north,
+                            label: "North America",
+                            borderColor: "#e8352e",
+                            fill: false
+                            }
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+    }
+</script>
+<script>
+    var xmlhttp = new XMLHttpRequest();
+    var url = "http://127.0.0.1:8000/api/data/?format=json";
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var data = JSON.parse(this.responseText);
+
+            // declare the variable which data you want to access
+            var month = data.Asia.map(function(elem) {
+                return elem.date;
+            });
+            var total_vaccinations = data.Asia.map(function(elem) {
+                return elem.total_vaccinations;
+            });
+            var people_fully_vaccinated = data.Asia.map(function(elem) {
+                return elem.people_fully_vaccinated;
+            });
+            
+
+            var ctx = document.getElementById('Asia').getContext('2d');
+            var Asia = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: month,
+                    datasets: [{
+                            data: total_vaccinations,
+                            label: "total_vaccinations",
+                            borderColor: "#3767ed",
+                            fill: false
+                        },
+                        {
+                            data: people_fully_vaccinated,
+                            label: "people_fully_vaccinated",
+                            borderColor: "#4ed973",
+                            fill: false
+                        }
+                          
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+    }
+</script>
+<script>
+    var xmlhttp = new XMLHttpRequest();
+    var url = "http://127.0.0.1:8000/api/data/?format=json";
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var data = JSON.parse(this.responseText);
+
+            // declare the variable which data you want to access
+            var month = data.Oceania.map(function(elem) {
+                return elem.date;
+            });
+            var total_vaccinations = data.Oceania.map(function(elem) {
+                return elem.total_vaccinations;
+            });
+            var people_fully_vaccinated = data.Oceania.map(function(elem) {
+                return elem.people_fully_vaccinated;
+            });
+            
+
+            var ctx = document.getElementById('Oceania').getContext('2d');
+            var Oceania = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: month,
+                    datasets: [{
+                            data: total_vaccinations,
+                            label: "total_vaccinations",
+                            borderColor: "#3767ed",
+                            fill: false
+                        },
+                        {
+                            data: people_fully_vaccinated,
+                            label: "people_fully_vaccinated",
+                            borderColor: "#4ed973",
+                            fill: false
+                        }
+                          
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+    }
+</script>
+<script>
+    var xmlhttp = new XMLHttpRequest();
+    var url = "http://127.0.0.1:8000/api/data/?format=json";
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var data = JSON.parse(this.responseText);
+
+            // declare the variable which data you want to access
+            var month = data.Africa.map(function(elem) {
+                return elem.date;
+            });
+            var total_vaccinations = data.Africa.map(function(elem) {
+                return elem.total_vaccinations;
+            });
+            var people_fully_vaccinated = data.Africa.map(function(elem) {
+                return elem.people_fully_vaccinated;
+            });
+            
+
+            var ctx = document.getElementById('Africa').getContext('2d');
+            var Africa = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: month,
+                    datasets: [{
+                            data: total_vaccinations,
+                            label: "total_vaccinations",
+                            borderColor: "#3767ed",
+                            fill: false
+                        },
+                        {
+                            data: people_fully_vaccinated,
+                            label: "people_fully_vaccinated",
+                            borderColor: "#4ed973",
+                            fill: false
+                        }
+                          
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+    }
+</script>
+<script>
+    var xmlhttp = new XMLHttpRequest();
+    var url = "http://127.0.0.1:8000/api/data/?format=json";
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var data = JSON.parse(this.responseText);
+
+            // declare the variable which data you want to access
+            var month = data.Europe.map(function(elem) {
+                return elem.date;
+            });
+            var total_vaccinations = data.Europe.map(function(elem) {
+                return elem.total_vaccinations;
+            });
+            var people_fully_vaccinated = data.Europe.map(function(elem) {
+                return elem.people_fully_vaccinated;
+            });
+            
+
+            var ctx = document.getElementById('Europe').getContext('2d');
+            var Europe = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: month,
+                    datasets: [{
+                            data: total_vaccinations,
+                            label: "total_vaccinations",
+                            borderColor: "#3767ed",
+                            fill: false
+                        },
+                        {
+                            data: people_fully_vaccinated,
+                            label: "people_fully_vaccinated",
+                            borderColor: "#4ed973",
+                            fill: false
+                        }
+                          
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+    }
+</script>
+<script>
+    var xmlhttp = new XMLHttpRequest();
+    var url = "http://127.0.0.1:8000/api/data/?format=json";
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var data = JSON.parse(this.responseText);
+
+            // declare the variable which data you want to access
+            var month = data.South_America.map(function(elem) {
+                return elem.date;
+            });
+            var total_vaccinations = data.South_America.map(function(elem) {
+                return elem.total_vaccinations;
+            });
+            var people_fully_vaccinated = data.South_America.map(function(elem) {
+                return elem.people_fully_vaccinated;
+            });
+            
+
+            var ctx = document.getElementById('South_America').getContext('2d');
+            var South_America = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: month,
+                    datasets: [{
+                            data: total_vaccinations,
+                            label: "total_vaccinations",
+                            borderColor: "#3767ed",
+                            fill: false
+                        },
+                        {
+                            data: people_fully_vaccinated,
+                            label: "people_fully_vaccinated",
+                            borderColor: "#4ed973",
+                            fill: false
+                        }
+                          
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+    }
+</script>
+<script>
+    var xmlhttp = new XMLHttpRequest();
+    var url = "http://127.0.0.1:8000/api/data/?format=json";
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var data = JSON.parse(this.responseText);
+
+            // declare the variable which data you want to access
+            var month = data.North_America.map(function(elem) {
+                return elem.date;
+            });
+            var total_vaccinations = data.North_America.map(function(elem) {
+                return elem.total_vaccinations;
+            });
+            var people_fully_vaccinated = data.North_America.map(function(elem) {
+                return elem.people_fully_vaccinated;
+            });
+            
+
+            var ctx = document.getElementById('North_America').getContext('2d');
+            var North_America = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: month,
+                    datasets: [{
+                            data: total_vaccinations,
+                            label: "total_vaccinations",
+                            borderColor: "#3767ed",
+                            fill: false
+                        },
+                        {
+                            data: people_fully_vaccinated,
+                            label: "people_fully_vaccinated",
+                            borderColor: "#4ed973",
+                            fill: false
+                        }
+                          
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+    }
+</script>
+
+</html>

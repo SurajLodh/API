@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js'></script>
+    <link rel="stylesheet" type="text/css" href="//github.com/downloads/lafeber/world-flags-sprite/flags32.css" />
+
+
+        <title>Contry</title>
+
+</head>
+
+<body>
+
+</body>
+
+<canvas id="myChart" style="height: 4200px;"></canvas>
+<canvas id="test1" style="height: 4200px;"></canvas>
+
+<script type='text/javascript'>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+
+    // The data for our dataset
+    data: {
+        labels: ['2021-03-11', '2021-03-12', '2021-03-13', '2021-03-14', '2021-03-15', '2021-03-16', '2021-03-17', '2021-03-18', '2021-03-19', '2021-03-20', '2021-03-21', '2021-03-22', '2021-03-23', '2021-03-24', '2021-03-25', '2021-03-26', '2021-03-27', '2021-03-28', '2021-03-29', '2021-03-30', '2021-03-31', '2021-04-01', '2021-04-02', '2021-04-03', '2021-04-04', '2021-04-05', '2021-04-06', '2021-04-07', '2021-04-08', '2021-04-09'],
+        datasets: [{
+            label: 'Total vaccinated',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data:[26164920, 28218457, 29738409, 29908038, 32947432, 35064536, 37143255, 39339817, 42063392, 44603841, 45065998, 48494594, 50841286, 53145709, 55504440, 58109773, 60269782, 60530435, 61113354, 63054353, 65117896, 68789138, 73054295, 75979651, 79105163, 83110926, 87077474, 90198673, 94334262, 98075160]
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+});
+</script>
+
+<script type='text/javascript'>
+    var ctx = document.getElementById('test1').getContext('2d');
+    var test1 = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+                    data: {
+                        labels: month,
+                        datasets: [{
+                                data: total_vaccinations,
+                                label: "Asia",
+                                borderColor: "#3767ed",
+                                fill: false
+                            },
+                            {
+                                data: Europ,
+                                label: "Europe",
+                                borderColor: "#4ed973",
+                                fill: false
+                            }
+                        ]
+    },
+
+    // Configuration options go here
+    options: {}
+});
+</script>
+
+</html>

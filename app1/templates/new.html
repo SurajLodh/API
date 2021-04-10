@@ -50,21 +50,18 @@
 <body>
 
 <div class="fixed-header">
-            <div class>
-                <nav>
-                    <a href="/"><span style="font-size: 40px;">COVID-19 Vaccination</span></a>
-
-                </nav>
-            </div>
-        </div>
-        <div>
-<div class="col-lg-3" style="float: left;  max-height: 650px;max-width:400px;overflow: scroll; overflow-x:hidden;">
+    <div class>
+        <nav>
+            <a href="/"><span style="font-size: 40px;">COVID-19 Vaccination</span></a>
+        </nav>
+    </div>
+</div>
+            <div class="col-lg-3" style="float: left;  max-height: 650px;max-width:400px;overflow: scroll; overflow-x:hidden;">
                 <div style="background-color: rgb(41, 41, 40);">
-
                     <span style="color: rgb(255, 255, 255); text-align: center;"><h2>Total Vaccinated: {{sum1|safe}}</h2></span>
                 </div>
                 <div class="col-lg-12">
-                    <div class="col-lg-4" style="float: left;">
+                    <div class="col-lg-4" style="height: 4200px; float: left;">
 
                         <form method="POST" enctype="multipart/form-data" action="selectCountry">
 
@@ -80,35 +77,26 @@
                     </div>
                     </form>
                 </div>
+
             </div>
             <div class="col-lg-6" style="float: left;">
                 <br>
                 <br>
-
-                <div style="float: center;">
-
                 {% if ShowMap == 'True' %}
-
-                <h2 style="text-align: center;">Analysis on Continent</h2><br>
-                
-                <canvas id="conti_chart" style="height: 450px;"></canvas>
-                
-                {% elif ShowMap == 'False' %}
-
-                <h2 style="text-align: center;">Analysis</h2><br>
-                <canvas id="newChart" style="height: 450px;"></canvas>
-
-                {%endif%}
+                <div style="float: center;">
+                    <h2 style="text-align: center;">Analysis on Continents</h2><br>
+                    <canvas id="conti_chart" style="height: 450px;"></canvas>
                 </div>
-
+                {% elif ShowMap == 'False' %}
+                <div style="float: center;">
+                    <h2 style="text-align: center;">{{Country}}</h2><br>
+                    <canvas id="newChart" style="height: 450px;"></canvas>
+                </div>
+                    <h2 style="text-align: center;">Total Vaccination {{Sum3}} vs People Fully Vaccinated {{Sum4}}</h2><br>
+                    <canvas id="test1" style="height: 450px;"></canvas>
+                {%endif%}
             </div>
-            <div class="col-lg-3" style="float: left;max-width: 300px;  max-height: 650px;overflow: scroll; overflow-x:hidden;">
 
-            </div>
-            </div>
-
-        </div>
-        <br>
 </body>
 
 <script type='text/javascript'>
@@ -269,6 +257,33 @@
     options: {}
 });
 
+</script>
+
+<script type='text/javascript'>
+    var ctx = document.getElementById('test1').getContext('2d');
+    var test1 = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+                    data: {
+                        labels: {{lable3|safe}},
+                        datasets: [{
+                                data: {{Data3|safe}},
+                                label: 'Total Vaccination',
+                                borderColor: "#3767ed",
+                                fill: false
+                            },
+                            {
+                                data: {{Data4|safe}},
+                                label: 'People Fully Vaccinated',
+                                borderColor: "#4ed973",
+                                fill: false
+                            }
+                        ]
+    },
+
+    // Configuration options go here
+    options: {}
+});
 </script>
 
 </html>
