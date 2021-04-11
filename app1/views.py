@@ -73,29 +73,40 @@ def SingleCountry(request):
     sum1 = sum(Data1)   #Total in infacted in All over World
     
     Country = request.POST.get('countryName')
-    df2 = df[['date', 'total_vaccinations','people_fully_vaccinated']][df['location'] == Country]
+    df2 = df[['date', 'total_vaccinations','people_fully_vaccinated','new_cases','new_deaths']][df['location'] == Country]
     df2 = df2[:30]         #Filter 30 days dataset
     df2 = df2.sort_values(by='total_vaccinations', ascending=True)  
     lable3 = df2['date'].to_list()  #data-column to list
     temp1 = df2['total_vaccinations'].fillna(0).to_list()  #data-column to list
     temp2 = df2['people_fully_vaccinated'].fillna(0).to_list()
-    
+    temp3 = df2['new_cases'].fillna(0).to_list() 
+    temp4 = df2['new_deaths'].fillna(0).to_list() 
+
     #Converting float to int 
-    Data3 = []
+
+    total_vaccinations = []
     for item1 in temp1:
-        Data3.append(int(item1))
-
-    Data4 = []
+        total_vaccinations.append(int(item1))
+               
+    people_fully_vaccinated = []
     for item2 in temp2:
-        Data4.append(int(item2)) 
+        people_fully_vaccinated.append(int(item2))   
+        
+    new_cases = []
+    for item3 in temp3:
+        new_cases.append(int(item3))
+        
+    new_deaths = []
+    for item4 in temp4:
+        new_deaths.append(int(item4))
 
-    sum3 = sum(Data3)      #sum of total_vaccinations
-    sum4 = sum(Data4)      #sum of people_fully_vaccinated
+    sum3 = sum(total_vaccinations)      #sum of total_vaccinations
+    sum4 = sum(people_fully_vaccinated)      #sum of people_fully_vaccinated
 
     #for True condition 
     ShowMap = 'False'  #this is for display using true/false condition display in this section graph model
     
-    context1 = {'lable1': lable1, 'Data1': Data1, 'sum1': sum1, 'sum3':sum3,'sum4':sum4,'lable3': lable3, 'Data3': Data3, 'Data4':Data4, 'Country':Country,'ShowMap':ShowMap}
+    context1 = {'lable1': lable1, 'Data1': Data1, 'sum1': sum1, 'sum3':sum3,'sum4':sum4,'lable3': lable3, 'total_vaccinations': total_vaccinations, 'people_fully_vaccinated':people_fully_vaccinated,'new_cases':new_cases,'new_deaths':new_deaths,'Country':Country,'ShowMap':ShowMap}
     
     return render(request, 'new.html', context1)
     

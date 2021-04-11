@@ -85,7 +85,7 @@
                 {% if ShowMap == 'True' %}
                 <div style="float: center;">
                     <h2 style="text-align: center;">Analysis on Continents</h2><br>
-                    <canvas id="conti_chart" style="height: 550px; width: 1100px; !important"></canvas>
+                    <canvas id="conti_chart" style="height: 550px; width: 1100px; !important"></canvas><br>
                 </div></div>
                 <div style="float: left;">
                     <h2 style="text-align: center;">Africa</h2><br>
@@ -111,7 +111,7 @@
                 {% elif ShowMap == 'False' %}
                 <div style="float: center;">
                     <h2 style="text-align: center;">{{Country}}</h2><br>
-                    <canvas id="newChart" style="height: 550px; width: 1100px; !important"></canvas>
+                    <canvas id="newChart" style="height: 550px; width: 1100px; !important"></canvas><br>
                 </div>
             </div>
             <div id="col-lg-7" style="float: center">
@@ -120,7 +120,7 @@
                         <canvas id="test1" style="height: 450px; width: 720px; !important"></canvas>
                 </div>
                 <div style="float: right;">
-                    <h2 style="text-align: center;">Testing 2</h2><br>
+                    <h2 style="text-align: center;">New Cases vs New Deaths</h2><br>
                     <canvas id="test2" style="height: 450px; width: 720px; !important"></canvas>
                 </div>
             </div>
@@ -280,7 +280,7 @@
             label: 'Total vaccinated',
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
-            data:{{Data3|safe}}
+            data:{{total_vaccinations|safe}}
         }]
     },
 
@@ -298,13 +298,13 @@
                     data: {
                         labels: {{lable3|safe}},
                         datasets: [{
-                                data: {{Data3|safe}},
+                                data: {{total_vaccinations|safe}},
                                 label: 'Total Vaccination',
                                 borderColor: "#3767ed",
                                 fill: false
                             },
                             {
-                                data: {{Data4|safe}},
+                                data: {{people_fully_vaccinated|safe}},
                                 label: 'People Fully Vaccinated',
                                 borderColor: "#4ed973",
                                 fill: false
@@ -316,43 +316,32 @@
     options: {}
 });
 </script>
-<script>
+<script type='text/javascript'>
     var ctx = document.getElementById('test2').getContext('2d');
     var test2 = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-    </script>
+    // The type of chart we want to create
+    type: 'line',
+                    data: {
+                        labels: {{lable3|safe}},
+                        datasets: [{
+                                data: {{new_cases|safe}},
+                                label: 'New Cases',
+                                borderColor: "#3767ed",
+                                fill: false
+                            },
+                            {
+                                data: {{new_deaths|safe}},
+                                label: 'New Deaths',
+                                borderColor: "#4ed973",
+                                fill: false
+                            }
+                        ]
+    },
+
+    // Configuration options go here
+    options: {}
+});
+</script>
 
 <script>
     var xmlhttp = new XMLHttpRequest();
