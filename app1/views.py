@@ -7,7 +7,12 @@ import pandas as pd
 import numpy as np
 # Create your views here.
 
-df = pd.read_csv('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv', encoding='utf-8', na_values=None, error_bad_lines=False)
+os.chdir(r"C:\Users\suraj\Desktop\Projects\Dashboard")
+os.getcwd()
+os.listdir()
+df = pd.read_csv('owid-covid-data.csv', encoding='utf-8', na_values=None, error_bad_lines=False)
+
+#df = pd.read_csv('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv', encoding='utf-8', na_values=None, error_bad_lines=False)
 df = df.sort_values(by='total_vaccinations', ascending=False)
 df.continent = df.continent.str.replace(' ','_')
 df.location = df.location.str.replace(' ','_')
