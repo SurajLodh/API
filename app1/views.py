@@ -32,21 +32,21 @@ def Index(request):
     del Country_vacc["World"]
     
     #Now Creating lable1 = Unique_country names and data1 = Total_Vaccine count for graph Country map
-    lable1 = []  #contain Unique_country names
-    Data1 = []   #contain Total_Vaccine count
+    Unique_country_names = []  #contain Unique_country names
+    Total_Vaccine_count = []   #contain Total_Vaccine count
 
     for i, j in Country_vacc.items():
-        lable1.append(i)
-        Data1.append(j)
+        Unique_country_names.append(i)
+        Total_Vaccine_count.append(j)
         
-    sum1 = sum(Data1)   #Total in infacted in All over World   
+    Total_Vaccine_sum_leftside_graph = sum(Total_Vaccine_count)   #Total in infacted in All over World   
     
     #for True condition 
     ShowMap = 'True'  #this is for display using true/false condition display in this section graph model
     
-    context1 = {'lable1': lable1, 'Data1': Data1, 'sum1': sum1, 'ShowMap':ShowMap}
+    context = {'Unique_country_names': Unique_country_names, 'Total_Vaccine_count': Total_Vaccine_count, 'Total_Vaccine_sum_leftside_graph': Total_Vaccine_sum_leftside_graph, 'ShowMap':ShowMap}
     
-    return render(request, 'new.html', context1)
+    return render(request, 'new.html', context)
 
 def SingleCountry(request):
     Country_vacc = {}
@@ -63,20 +63,20 @@ def SingleCountry(request):
     del Country_vacc["World"]
     
     #Now Creating lable1 = Unique_country names and data1 = Total_Vaccine count for graph Country map
-    lable1 = []  #contain Unique_country names
-    Data1 = []   #contain Total_Vaccine count
+    Unique_country_names = []  #contain Unique_country names
+    Total_Vaccine_count = []   #contain Total_Vaccine count
 
     for i, j in Country_vacc.items():
-        lable1.append(i)
-        Data1.append(j)
+        Unique_country_names.append(i)
+        Total_Vaccine_count.append(j)
          
-    sum1 = sum(Data1)   #Total in infacted in All over World
+    Total_Vaccine_sum_leftside_graph = sum(Total_Vaccine_count)   #Total in infacted in All over World
     
     Country = request.POST.get('countryName')
     df2 = df[['date', 'total_vaccinations','people_fully_vaccinated','new_cases','new_deaths']][df['location'] == Country]
     df2 = df2[:30]         #Filter 30 days dataset
     df2 = df2.sort_values(by='total_vaccinations', ascending=True)  
-    lable3 = df2['date'].to_list()  #data-column to list
+    Date_for_graph = df2['date'].to_list()  #data-column to list
     temp1 = df2['total_vaccinations'].fillna(0).to_list()  #data-column to list
     temp2 = df2['people_fully_vaccinated'].fillna(0).to_list()
     temp3 = df2['new_cases'].fillna(0).to_list() 
@@ -100,13 +100,13 @@ def SingleCountry(request):
     for item4 in temp4:
         new_deaths.append(int(item4))
 
-    sum3 = sum(total_vaccinations)      #sum of total_vaccinations
-    sum4 = sum(people_fully_vaccinated)      #sum of people_fully_vaccinated
+    total_vaccinations_sum = sum(total_vaccinations)      #sum of total_vaccinations
+    people_fully_vaccinated_sum = sum(people_fully_vaccinated)      #sum of people_fully_vaccinated
 
     #for True condition 
     ShowMap = 'False'  #this is for display using true/false condition display in this section graph model
     
-    context1 = {'lable1': lable1, 'Data1': Data1, 'sum1': sum1, 'sum3':sum3,'sum4':sum4,'lable3': lable3, 'total_vaccinations': total_vaccinations, 'people_fully_vaccinated':people_fully_vaccinated,'new_cases':new_cases,'new_deaths':new_deaths,'Country':Country,'ShowMap':ShowMap}
+    context = {'Unique_country_names': Unique_country_names, 'Total_Vaccine_count': Total_Vaccine_count, 'Total_Vaccine_sum_leftside_graph': Total_Vaccine_sum_leftside_graph, 'total_vaccinations_sum':total_vaccinations_sum,'people_fully_vaccinated':people_fully_vaccinated,'Date_for_graph': Date_for_graph, 'total_vaccinations': total_vaccinations, 'people_fully_vaccinated_sum':people_fully_vaccinated_sum,'new_cases':new_cases,'new_deaths':new_deaths,'Country':Country,'ShowMap':ShowMap}
     
-    return render(request, 'new.html', context1)
+    return render(request, 'new.html', context)
     
